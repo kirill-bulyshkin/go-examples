@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	appendElementsToSlice()
+	loopWithRange()
 }
 
 // DECLARING VARIABLES
@@ -387,5 +387,166 @@ func nestedLoops() {
 	}
 }
 
-//The range keyword is used to more easily iterate over an array, slice or map. It returns both the index and the value.
-//TBU
+// The range keyword is used to more easily iterate over an array, slice or map. It returns both the index and the value.
+func loopWithRange() {
+	fruits := [3]string{"apple", "orange", "banana"}
+	for idx, val := range fruits {
+		fmt.Printf("%v\t%v\n", idx, val)
+	}
+}
+
+// FUNCTIONS
+func returnTwoValues(x int, y string) (result int, txt1 string) {
+	result = x + x
+	txt1 = y + " World!"
+	return
+}
+
+func storeReturnedValuesInTwoVariables() {
+	a, b := returnTwoValues(5, "Hello")
+	fmt.Println(a, b)
+}
+
+func omitOneOfReturnedValues() {
+	_, b := returnTwoValues(5, "Hello")
+	fmt.Println(b)
+}
+
+// A function is recursive if it calls itself and reaches a stop condition.
+// In the following example, testcount() is a function that calls itself.
+// We use the x variable as the data, which increments with 1 (x + 1) every time we recurse.
+// The recursion ends when the x variable equals to 11 (x == 11).
+func testcount(x int) int {
+	if x == 11 {
+		return 0
+	}
+	fmt.Println(x)
+	return testcount(x + 1)
+}
+
+// In the following example, factorial_recursion() is a function that calls itself.
+// We use the x variable as the data, which decrements (-1) every time we recurse.
+// The recursion ends when the condition is not greater than 0 (i.e. when it is 0).
+func factorial_recursion(x float64) (y float64) {
+	if x > 0 {
+		y = x * factorial_recursion(x-1)
+	} else {
+		y = 1
+	}
+	return
+}
+
+// STRUCTURES
+// While arrays are used to store multiple values of the same data type into a single variable,
+// structs are used to store multiple values of different data types into a single variable.
+// A struct can be useful for grouping data together to create records
+
+// syntax
+// type struct_name struct {
+// 	member1 datatype;
+// 	member2 datatype;
+// 	member3 datatype;
+// 	...
+//   }
+
+type Person struct {
+	name   string
+	age    int
+	job    string
+	salary int
+}
+
+// MAPS
+// Maps are used to store data values in key:value pairs.
+// A map is an unordered and changeable collection that does not allow duplicates.
+// The length of a map is the number of its elements. You can find it using the len() function.
+
+func creatingMaps() {
+	//map[KeyType]ValueType{key1:value1, key2:value2,...}
+	var a = map[string]string{"brand": "Ford", "model": "Mustang", "year": "1964"}
+	b := map[string]int{"Oslo": 1, "Bergen": 2, "Trondheim": 3, "Stavanger": 4}
+
+	fmt.Printf("a\t%v\n", a)
+	fmt.Printf("b\t%v\n", b)
+}
+
+func creatingMapsViaMakeFunction() {
+	var a = make(map[string]string) // The map is empty now
+	a["brand"] = "Ford"
+	a["model"] = "Mustang"
+	a["year"] = "1964"
+	// a is no longer empty
+	b := make(map[string]int)
+	b["Oslo"] = 1
+	b["Bergen"] = 2
+	b["Trondheim"] = 3
+	b["Stavanger"] = 4
+
+	fmt.Printf("a\t%v\n", a)
+	fmt.Printf("b\t%v\n", b)
+}
+
+func creatingEmptyMap() {
+	var a map[string]string
+
+	fmt.Println(a == nil)
+}
+
+func accessingMapElement() {
+	var a = make(map[string]string)
+	a["brand"] = "Ford"
+	a["model"] = "Mustang"
+	a["year"] = "1964"
+
+	fmt.Printf(a["brand"])
+}
+
+func updatingAndAddingMapElements() {
+	var a = make(map[string]string)
+	a["brand"] = "Ford"
+	a["model"] = "Mustang"
+	a["year"] = "1964"
+
+	fmt.Println(a)
+
+	a["year"] = "1970" // Updating an element
+	a["color"] = "red" // Adding an element
+
+	fmt.Println(a)
+}
+
+func removingMapElement() {
+	var a = make(map[string]string)
+	a["brand"] = "Ford"
+	a["model"] = "Mustang"
+	a["year"] = "1964"
+
+	fmt.Println(a)
+
+	delete(a, "year")
+
+	fmt.Println(a)
+}
+
+func checkForSpecificElementsInMap() {
+	var a = map[string]string{"brand": "Ford", "model": "Mustang", "year": "1964", "day": ""}
+
+	//val, ok :=map_name[key]
+	val1, ok1 := a["brand"] // Checking for existing key and its value
+	val2, ok2 := a["color"] // Checking for non-existing key and its value
+	val3, ok3 := a["day"]   // Checking for existing key and its value
+	_, ok4 := a["model"]    // Only checking for existing key and not its value
+
+	fmt.Println(val1, ok1)
+	fmt.Println(val2, ok2)
+	fmt.Println(val3, ok3)
+	fmt.Println(ok4)
+}
+
+func iteratingOverMap() {
+	a := map[string]int{"one": 1, "two": 2, "three": 3, "four": 4}
+
+	for k, v := range a {
+		fmt.Printf("%v : %v, ", k, v)
+	}
+}

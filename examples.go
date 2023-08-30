@@ -5,10 +5,17 @@ package main
 
 import (
 	"fmt"
+	"math"
+	"time"
+
+	"example.com/hello/exercises"
 )
 
 func main() {
-	loopWithRange()
+	// typeYourFuncHere()
+	creatingMapsWithStructValue()
+
+	exercises.Sqrt(256.0)
 }
 
 // DECLARING VARIABLES
@@ -301,10 +308,12 @@ func copyItemsFromOneSliceToAnother() {
 //   -- Decrement
 
 // Assignment Operators
-//	=
-//	+=
-// 	-=
-//	...
+//	=	Assign 						x = y	==	x = y
+//	+=	Add and assign				x += y	==	x = x + y
+// 	-=	Subtract and assign			x -= y	==	x = x - y
+// 	*=	Multiply and assign			x *= y	==	x = x * y
+//	/=	Divide and assign quotient	x /= y	==	x = x / y
+//  %=	Divide and assign modulus	x %= y	==	x = x % y
 
 //Comparison Operators
 // ==	Equal to
@@ -327,6 +336,15 @@ func copyItemsFromOneSliceToAnother() {
 // >>	Signed right shift	Shift right by pushing copies of the leftmost bit in from the left, and let the rightmost bits fall off	x >> 2
 
 // CONDITIONS
+// If with a short statement
+// Like for, the if statement can start with a short statement to execute before the condition.
+func pow(x, n, lim float64) float64 {
+	if v := math.Pow(x, n); v < lim {
+		return v
+	}
+	return lim
+}
+
 func elseIfStatement() {
 	time := 22
 	if time < 10 {
@@ -340,6 +358,21 @@ func elseIfStatement() {
 
 // SWITCH
 // Go ONLY runs the matched case so it does not need a break statement.
+func whenSaturday() {
+	fmt.Println("When's Saturday?")
+	today := time.Now().Weekday()
+	switch time.Saturday {
+	case today + 0:
+		fmt.Println("Today.")
+	case today + 1:
+		fmt.Println("Tomorrow.")
+	case today + 2:
+		fmt.Println("In two days.")
+	default:
+		fmt.Println("Too far away.")
+	}
+}
+
 func multiCaseSwitch() {
 	day := 5
 
@@ -436,6 +469,13 @@ func factorial_recursion(x float64) (y float64) {
 	return
 }
 
+// A defer statement defers the execution of a function until the surrounding function returns.
+func deferFuncExample() {
+	defer fmt.Println("world")
+
+	fmt.Println("hello")
+}
+
 // STRUCTURES
 // While arrays are used to store multiple values of the same data type into a single variable,
 // structs are used to store multiple values of different data types into a single variable.
@@ -470,6 +510,21 @@ func creatingMaps() {
 	fmt.Printf("b\t%v\n", b)
 }
 
+func creatingMapsWithStructValue() {
+	type Vertex struct {
+		Lat, Long float64
+	}
+
+	// var m map[string]Vertex
+	m := make(map[string]Vertex)
+
+	m["Bell Labs"] = Vertex{
+		40.68433, -74.39967,
+	}
+
+	fmt.Printf("m,\t%v\n", m)
+}
+
 func creatingMapsViaMakeFunction() {
 	var a = make(map[string]string) // The map is empty now
 	a["brand"] = "Ford"
@@ -491,6 +546,18 @@ func creatingEmptyMap() {
 
 	fmt.Println(a == nil)
 }
+
+//Insert or update an element in map m:
+//m[key] = elem
+
+//Retrieve an element:
+//elem = m[key]
+
+//Delete an element:
+//delete(m, key)
+
+//Test that a key is present with a two-value assignment:
+//elem, ok = m[key]
 
 func accessingMapElement() {
 	var a = make(map[string]string)

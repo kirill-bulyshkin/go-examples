@@ -1,6 +1,9 @@
 package exercises
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 //Exercise: Loops and Functions
 
@@ -11,15 +14,29 @@ import "fmt"
 
 func Sqrt(x float64) float64 {
 
-	var z float64
-	z = 1.0
+	var z, size float64 = x / 2, 10000
 
 	for i := 0; i <= 10; i++ {
+		fmt.Printf("Iteration_%d: ", i)
+		// Comparing current rounded value of z with the rounded value after one more attemting of sqrtFormula()
+		if z != RoundToSize(sqrtFormula(x, z), size) {
 
-		z -= (z*z - x) / (2 * z)
+			z = RoundToSize(sqrtFormula(x, z), size)
+			fmt.Printf("%.15f\n", z)
 
-		fmt.Println(z)
+		}
 	}
 
+	fmt.Printf("\n\nSquare root of %f is %f", x, z)
 	return z
+}
+
+func sqrtFormula(x, z float64) float64 {
+	z -= (z*z - x) / (2 * z)
+	return z
+}
+
+func RoundToSize(x float64, size float64) float64 {
+	roundedFloat := math.Round(x*size) / size
+	return roundedFloat
 }

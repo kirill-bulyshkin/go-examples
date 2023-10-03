@@ -12,10 +12,12 @@ import (
 )
 
 func main() {
-	// typeYourFuncHere()
+	//functions
 	creatingMapsWithStructValue()
 
+	//exercises
 	exercises.Sqrt(256.0)
+	exercises.ShowPicture()
 }
 
 // DECLARING VARIABLES

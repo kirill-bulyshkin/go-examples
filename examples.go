@@ -619,3 +619,103 @@ func iteratingOverMap() {
 		fmt.Printf("%v : %v, ", k, v)
 	}
 }
+
+// METHODS
+// Go does not have classes. However, you can define methods on types.
+// A method is a function with a special receiver argument.
+// In this example, the Abs method has a receiver of type Vertex named v:
+
+type Vertex struct {
+	X, Y float64
+}
+
+func (v Vertex) Abs() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+// Pointer receivers
+// With a value receiver, the methods operates on a COPY of the original Vertex value. (This is the same behavior as for any other function argument).
+// The Scale method must have a pointer receiver to change the Vertex value declared in the main function.
+
+func (v *Vertex) Scale(f float64) {
+	v.X = v.X * f
+	v.Y = v.Y * f
+}
+
+// There are two reasons to use a pointer receiver.
+// The first is so that the method can modify the value that its receiver points to.
+// The second is to avoid copying the value on each method call. This can be more efficient if the receiver is a large struct.
+
+// Interfaces
+// An interface type is defined as a set of method signatures.
+
+type Abser interface {
+	Abs() float64
+}
+
+type MyFloat float64
+
+func (f MyFloat) Abs() float64 {
+	if f < 0 {
+		return float64(-f)
+	}
+	return float64(f)
+}
+
+// The empty interface
+// The interface type that specifies zero methods is known as the empty interface:
+
+//interface{}
+
+func emptyInterfaceExmpl() {
+	var i interface{}
+	describe(i)
+
+	i = 42
+	describe(i)
+
+	i = "hello"
+	describe(i)
+}
+
+func describe(i interface{}) {
+	fmt.Printf("(%v, %T)\n", i, i)
+}
+
+// Type assertions
+// t := i.(T)
+// ^ This statement asserts that the interface value i holds the concrete type T
+// If i does not hold a T, the statement will trigger a panic.
+// To test whether an interface value holds a specific type, a type assertion can return two values: the underlying value and a boolean value that reports whether the assertion succeeded
+// and panic will not occur.
+
+func typeAssertion() {
+	var i interface{} = "hello"
+
+	s := i.(string)
+	fmt.Println(s)
+
+	s, ok := i.(string)
+	fmt.Println(s, ok)
+
+	f, ok := i.(float64)
+	fmt.Println(f, ok)
+
+	f = i.(float64) // panic
+	fmt.Println(f)
+}
+
+// Type switches
+// A type switch is like a regular switch statement, but the cases in a type switch specify types (not values), and those values are compared against the type of the value held by the given interface value.
+
+func typeSwitch(i interface{}) {
+	// The declaration in a type switch has the same syntax as a type assertion i.(T), but the specific type T is replaced with the keyword type.
+	switch v := i.(type) {
+	case int:
+		fmt.Printf("Twice %v is %v\n", v, v*2)
+	case string:
+		fmt.Printf("%q is %v bytes long\n", v, len(v))
+	default:
+		fmt.Printf("I don't know about type %T!\n", v)
+	}
+}

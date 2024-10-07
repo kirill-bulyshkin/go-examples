@@ -7,9 +7,9 @@ import (
 	"golang.org/x/tour/reader"
 )
 
-//Exercise: Readers
+// Exercise: Readers
 
-//Implement a Reader type that emits an infinite stream of the ASCII character 'A'.
+// Implement a Reader type that emits an infinite stream of the ASCII character 'A'.
 
 // TODO: Add a Read([]byte) (int, error) method to MyReader.
 
